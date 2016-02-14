@@ -49,6 +49,22 @@ Under virtual env:
 
     export DEBUG=1
 
+Postgres setup (OS X):
+
+    brew install postgis
+
+    createuser cosmopolitan
+
+    createdb cosmopolitan
+
+    psql cosmopolitan
+
+    alter user "cosmopolitan" with password '123456';
+
+    grant all privileges on database cosmopolitan to cosmopolitan;
+
+    CREATE EXTENSION postgis;
+
 ## Starting from scratch
 
 if you just pulled this repo, you need to:
