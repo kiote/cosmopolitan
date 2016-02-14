@@ -41,7 +41,7 @@ Example: `GET /v1/currencies/?countries=aq`, `GET /v1/currencies/?countries=aq,a
 
 ## Running locally
 
-Under virtual env:
+Under virtual env (to create virtualenv, run `python3 -m venv env`):
 
     source env/bin/activate
 
@@ -49,7 +49,7 @@ Under virtual env:
 
     export DEBUG=1
 
-Postgres setup (OS X):
+Postgres + PostGIS setup (OS X):
 
     brew install postgis
 
@@ -67,11 +67,14 @@ Postgres setup (OS X):
 
 ## Starting from scratch
 
+### Requirements
+
+* [GDAL/OGR Binaries](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries)
+
 if you just pulled this repo, you need to:
 
-* fill in cities database with ```python manage.py cities --import=all```;
-* re-migrate all models on top with
+* migrate database: `./manage.py migrate`
 
-    python manage.py migrate continents zero
+* fill in cities database with `./manage.py cities --import=all`;
 
-    python manage.py migrate
+* start import process with `./manage.py import`
