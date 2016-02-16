@@ -58,3 +58,20 @@ class Postcode(models.Model):
     district_name = models.CharField(max_length=100, db_index=True)
 
     region = models.ForeignKey("cosmopolitan.Region", null=True, blank=True)
+
+
+class GeoJSON(models.Model):
+    id = models.CharField(max_length=400, primary_key=True)
+    geojson = models.TextField()
+
+
+class CountryGeoJSON(GeoJSON):
+    country = models.ForeignKey(Country)
+
+
+class CityGeoJSON(GeoJSON):
+    city = models.ForeignKey(City)
+
+
+class RegionGeoJSON(GeoJSON):
+    region = models.ForeignKey(Region)
