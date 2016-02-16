@@ -9,11 +9,14 @@ COUNTRIES_FILE_NAME_NO_EXT = "ne_110m_admin_0_countries"
 COUNTRIES_FILE_NAME = COUNTRIES_FILE_NAME_NO_EXT + ".zip"
 FOLDER = "data/"
 
-def super_log(message):
+def _super_log(message):
     print("-" * 18)
     print(message)
     print("-" * 18 + "\n")
 
+def _format_ogr2ogr(path='', file_name=''):
+    return "ogr2ogr -f 'GeoJSON' %(path)s.geojson %(path)s/%(file_name)s.shp" % \
+        { 'path': path, 'file_name': file_name }
 
 '''
 File downloadded from web
@@ -30,14 +33,14 @@ class Webfile:
             open(self.file_name)
             return True
         except FileNotFoundError as e:
-            super_log('Going to download file...')
+            _super_log('Going to download file...')
             return False
 
     def _retreive(self):
         try:
             res = request.urlretrieve(self.url, self.file_name)
         except Exception as e:
-            super_log("Was about to retreive %s, but got error: %s" \
+            _super_log("Was about to retreive %s, but got error: %s" \
                       % (self.url, str(e)))
             return None
 
@@ -55,14 +58,14 @@ class Webfile:
             return self._retreive()
 
 
-def download_countries():
+def process_countries():
     file_name = FOLDER + COUNTRIES_FILE_NAME
 
     Webfile(url=HOST + COUNTRIES + COUNTRIES_FILE_NAME,
             file_name=file_name).download()
 
     if not os.path.exists(file_name):
-        super_log("Can't proceed, file %s not found" % file_name)
+        _super_log("Can't proceed, file %s not found" % file_name)
         return 1
 
     # unzip zip file
@@ -73,6 +76,7 @@ def download_countries():
             z.extract(name, outpath)
 
     # call org2org on unzipped stuff
-    os.system("ogr2ogr")
+    path = FOLDER + COUNTRIES_FILE_NAME_NO_EXT
+    os.system(_format_ogr2ogr(path=path, file_name=COUNTRIES_FILE_NAME_NO_EXT))
 
     # handle *.geojson file

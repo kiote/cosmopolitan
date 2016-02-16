@@ -4,7 +4,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 import cosmopolitan.management.commands._django_cities as ds
-import cosmopolitan.management.commands._naturalearthdata as ned 
+import cosmopolitan.management.commands._naturalearthdata as ned
 
 # more stuff could be added here
 IMPORT_OPTS = [
@@ -46,7 +46,7 @@ class Command(BaseCommand):
         ds.add_regions_to_postcodes()
 
     def _import_naturalearthdata(self):
-        ned.download_countries()
+        ned.process_countries()
 
     def _import_all(self):
         self._import_django_cities()
