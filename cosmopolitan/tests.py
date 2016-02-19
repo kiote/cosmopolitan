@@ -31,3 +31,8 @@ class PostcodeTest(BaseRESTAPITestCase, ListAPITestCaseMixin):
 class RegionTest(BaseRESTAPITestCase, ListAPITestCaseMixin):
     base_name = 'region'
     factory_class = RegionFactory
+
+
+class CountryGeoJSONTest(BaseRESTAPITestCase, ListAPITestCaseMixin):
+    base_name = 'countrygeojson'
+    factory_class = CountryGeoJSONFactory
