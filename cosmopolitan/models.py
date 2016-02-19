@@ -66,12 +66,21 @@ class GeoJSON(models.Model):
 
 
 class CountryGeoJSON(GeoJSON):
-    country = models.ForeignKey(Country)
+    country = models.OneToOneField(
+        Country,
+        on_delete=models.CASCADE
+    )
 
 
 class CityGeoJSON(GeoJSON):
-    city = models.ForeignKey(City)
+    city = models.OneToOneField(
+        City,
+        on_delete=models.CASCADE
+    )
 
 
 class RegionGeoJSON(GeoJSON):
-    region = models.ForeignKey(Region)
+    region = models.OneToOneField(
+        Region,
+        on_delete=models.CASCADE
+    )

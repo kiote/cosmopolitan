@@ -14,31 +14,31 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GeoJSON',
             fields=[
-                ('id', models.CharField(serialize=False, max_length=400, primary_key=True)),
+                ('id', models.CharField(max_length=400, primary_key=True, serialize=False)),
                 ('geojson', models.TextField()),
             ],
         ),
         migrations.CreateModel(
             name='CityGeoJSON',
             fields=[
-                ('geojson_ptr', models.OneToOneField(auto_created=True, to='cosmopolitan.GeoJSON', primary_key=True, parent_link=True, serialize=False)),
-                ('city', models.ForeignKey(to='cosmopolitan.City')),
+                ('geojson_ptr', models.OneToOneField(parent_link=True, serialize=False, to='cosmopolitan.GeoJSON', primary_key=True, auto_created=True)),
+                ('city', models.OneToOneField(to='cosmopolitan.City')),
             ],
             bases=('cosmopolitan.geojson',),
         ),
         migrations.CreateModel(
             name='CountryGeoJSON',
             fields=[
-                ('geojson_ptr', models.OneToOneField(auto_created=True, to='cosmopolitan.GeoJSON', primary_key=True, parent_link=True, serialize=False)),
-                ('country', models.ForeignKey(to='cosmopolitan.Country')),
+                ('geojson_ptr', models.OneToOneField(parent_link=True, serialize=False, to='cosmopolitan.GeoJSON', primary_key=True, auto_created=True)),
+                ('country', models.OneToOneField(to='cosmopolitan.Country')),
             ],
             bases=('cosmopolitan.geojson',),
         ),
         migrations.CreateModel(
             name='RegionGeoJSON',
             fields=[
-                ('geojson_ptr', models.OneToOneField(auto_created=True, to='cosmopolitan.GeoJSON', primary_key=True, parent_link=True, serialize=False)),
-                ('region', models.ForeignKey(to='cosmopolitan.Region')),
+                ('geojson_ptr', models.OneToOneField(parent_link=True, serialize=False, to='cosmopolitan.GeoJSON', primary_key=True, auto_created=True)),
+                ('region', models.OneToOneField(to='cosmopolitan.Region')),
             ],
             bases=('cosmopolitan.geojson',),
         ),
