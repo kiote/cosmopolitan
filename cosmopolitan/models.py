@@ -17,6 +17,7 @@ class Country(models.Model):
     code3 = models.CharField(max_length=3)
     currency = models.ForeignKey("cosmopolitan.Currency", null=True)
     continent = models.ForeignKey("cosmopolitan.Continent", null=True)
+    polygon = models.TextField(null=True)
 
 
 class Currency(models.Model):
@@ -31,6 +32,7 @@ class Region(models.Model):
     name = models.CharField(max_length=200, db_index=True, verbose_name="ascii name")
     name_std = models.CharField(max_length=200, db_index=True, verbose_name="standard name")
     country = models.ForeignKey("cosmopolitan.Country")
+    polygon = models.TextField(null=True)
 
 
 class City(models.Model):
@@ -44,6 +46,7 @@ class City(models.Model):
     elevation = models.IntegerField(null=True)
     kind = models.CharField(max_length=10) # http://www.geonames.org/export/codes.html
     timezone = models.CharField(max_length=40)
+    polygon = models.TextField(null=True)
 
 
 class Postcode(models.Model):
@@ -58,29 +61,3 @@ class Postcode(models.Model):
     district_name = models.CharField(max_length=100, db_index=True)
 
     region = models.ForeignKey("cosmopolitan.Region", null=True, blank=True)
-
-
-class GeoJSON(models.Model):
-    id = models.CharField(max_length=400, primary_key=True)
-    geojson = models.TextField()
-
-
-class CountryGeoJSON(GeoJSON):
-    country = models.OneToOneField(
-        Country,
-        on_delete=models.CASCADE
-    )
-
-
-class CityGeoJSON(GeoJSON):
-    city = models.OneToOneField(
-        City,
-        on_delete=models.CASCADE
-    )
-
-
-class RegionGeoJSON(GeoJSON):
-    region = models.OneToOneField(
-        Region,
-        on_delete=models.CASCADE
-    )

@@ -1,7 +1,6 @@
 import os
 
 from cosmopolitan.models import Country
-from cosmopolitan.models import CountryGeoJSON
 
 import cosmopolitan.management.commands.service.web as sweb
 import cosmopolitan.management.commands.service.os as sos
@@ -41,8 +40,6 @@ def process_countries():
 
     print("\n--- Seeding countries: ---")
 
-    CountryGeoJSON.objects.all().delete()
-
     for feature in data["features"]:
         json_country_code = feature["properties"]["ISO_A2"]
         try:
@@ -51,9 +48,7 @@ def process_countries():
             print('Not found: ' + json_country_code, end='')
             # country = Country.objects.get(name=mappings[json_country_name])
 
-        country_geoJSON = CountryGeoJSON(id=country.id)
-        country_geoJSON.country_id = country.id
-        country_geoJSON.geojson = feature["geometry"]["coordinates"]
-        country_geoJSON.save()
+        country.polygon = feature["geometry"]["coordinates"]
+        country.save()
 
         print(".", end="", flush=True)

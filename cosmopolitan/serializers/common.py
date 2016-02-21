@@ -6,7 +6,6 @@ from cosmopolitan.models import Country
 from cosmopolitan.models import City
 from cosmopolitan.models import Region
 from cosmopolitan.models import Postcode
-from cosmopolitan.models import CountryGeoJSON
 
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
@@ -43,8 +42,3 @@ class PostcodeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Postcode
         fields = ('id',)
-
-
-class CountryGeoJSONSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = CountryGeoJSON

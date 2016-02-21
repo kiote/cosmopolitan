@@ -9,7 +9,6 @@ from .models import Country
 from .models import City
 from .models import Region
 from .models import Postcode
-from .models import CountryGeoJSON
 
 from .serializers.specific import ContinentListSerializer
 from .serializers.specific import ContinentDetailSerializer
@@ -28,9 +27,6 @@ from .serializers.specific import CurrencyDetailSerializer
 
 from .serializers.specific import PostcodeListSerializer
 from .serializers.specific import PostcodeDetailSerializer
-
-from .serializers.specific import CountryGeoJSONListSerializer
-from .serializers.specific import CountryGeoJSONDetailSerializer
 
 
 class CityViewSet(mixins.ListDetailSerializerMixin, viewsets.ReadOnlyModelViewSet):
@@ -127,10 +123,3 @@ class CountryViewSet(mixins.ListDetailSerializerMixin, viewsets.ReadOnlyModelVie
             if current_country['id'] == request_country_code:
                 del(data['continent']['related'][idx])
         return data
-
-
-class CountryGeoJSONViewSet(mixins.ListDetailSerializerMixin, viewsets.ReadOnlyModelViewSet):
-    model = CountryGeoJSON
-    queryset = CountryGeoJSON.objects.all()
-    list_serializer = CountryGeoJSONListSerializer
-    detail_serializer = CountryGeoJSONDetailSerializer

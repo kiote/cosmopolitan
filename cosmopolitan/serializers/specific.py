@@ -4,7 +4,6 @@ from cosmopolitan.models import Country
 from cosmopolitan.models import City
 from cosmopolitan.models import Region
 from cosmopolitan.models import Postcode
-from cosmopolitan.models import CountryGeoJSON
 
 from cosmopolitan.serializers.common import CurrencySerializer
 from cosmopolitan.serializers.common import CountrySerializer
@@ -12,7 +11,6 @@ from cosmopolitan.serializers.common import ContinentSerializer
 from cosmopolitan.serializers.common import CitySerializer
 from cosmopolitan.serializers.common import RegionSerializer
 from cosmopolitan.serializers.common import PostcodeSerializer
-from cosmopolitan.serializers.common import CountryGeoJSONSerializer
 
 from cosmopolitan.serializers.internal import CountryShortSerializer
 from cosmopolitan.serializers.internal import ContinentShortSerializer
@@ -20,18 +18,6 @@ from cosmopolitan.serializers.internal import CurrencyShortSerializer
 from cosmopolitan.serializers.internal import RegionShortSerializer
 
 from cosmopolitan.serializers.internal import ContinentWithRelatedSerializer
-
-
-class CountryGeoJSONListSerializer(CountryGeoJSONSerializer):
-    class Meta:
-        model = CountryGeoJSON
-        fields = ('id', 'url')
-
-
-class CountryGeoJSONDetailSerializer(CountryGeoJSONSerializer):
-    class Meta:
-        model = CountryGeoJSON
-        fields = ('id', 'url', 'geojson')
 
 
 class CurrencyListSerializer(CurrencySerializer):
@@ -67,11 +53,10 @@ class ContinentDetailSerializer(ContinentSerializer):
 class CountryListSerializer(CountrySerializer):
     currency = CurrencyShortSerializer()
     continent = ContinentShortSerializer()
-    countrygeojson = CountryGeoJSONListSerializer(allow_null=True)
 
     class Meta:
         model = Country
-        fields = ('id', 'url', 'name', 'continent', 'currency', 'countrygeojson')
+        fields = ('id', 'url', 'name', 'continent', 'currency')
 
 
 class CountryDetailSerializer(CountrySerializer):
@@ -79,7 +64,7 @@ class CountryDetailSerializer(CountrySerializer):
     continent = ContinentWithRelatedSerializer()
     class Meta:
         model = Country
-        fields = ('id', 'url', 'name', 'continent', 'currency')
+        fields = ('id', 'url', 'name', 'continent', 'currency', 'polygon')
 
 
 class CityListSerializer(CitySerializer):
